@@ -3,7 +3,8 @@ import { horizontalScale, verticalScale } from '../../assets/styles/scaling';
 
 const style = StyleSheet.create({
   image: {
-    width: horizontalScale(155),
+    borderRadius: horizontalScale(20),
+    width: horizontalScale(140),
     height: verticalScale(170),
   },
   badge: {
