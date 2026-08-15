@@ -134,7 +134,7 @@ const Home = ({ navigation }) => {
                   <SingleDonationItem
                     onPress={selectedDonationId => {
                       dispatch(updateSelectedDonationId(selectedDonationId));
-                      navigation.navigate(Routes.SingleDonationItem, {
+                      navigation.navigate(Routes.SingleDonationItemScreen, {
                         categoryInformation,
                       });
                     }}

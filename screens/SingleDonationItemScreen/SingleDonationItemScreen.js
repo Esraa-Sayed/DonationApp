@@ -4,9 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '../../components/BackButton/BackButton';
 import globalStyle from '../../assets/styles/globalStyle';
 import style from './style';
-import { Image, View, Text, Button } from 'react-native';
+import { Image, View, Text } from 'react-native';
 import Badge from '../../components/Badge/Badge';
 import Header from '../../components/Header/Header';
+import Button from '../../components/Button/Button';
 import { useSelector } from 'react-redux';
 
 const SingleDonationItemScreen = ({ navigation, route }) => {
