@@ -1,28 +1,39 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { logIn } from '../../redux/reducers/User';
-import { ScrollView, Pressable, View, Text } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 import Input from '../../components/Input/Input';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import style from './style';
 import globalStyle from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
-import { Routes } from '../../navigation/Routes';
-import { loginUser } from '../../Api/user';
-const Login = ({ navigation }) => {
+import BackButton from '../../components/BackButton/BackButton';
+import { createUser } from '../../Api/user';
+
+const Register = ({ navigation }) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
-  const dispatch = useDispatch();
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+      <View style={style.backButton}>
+        <BackButton onPress={() => navigation.goBack()} />
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={style.container}
       >
         <View style={globalStyle.marginBottom24}>
-          <Header type={1} title={'Welcome Back'} />
+          <Header type={1} title={'Create Account'} />
+        </View>
+        <View style={globalStyle.marginBottom24}>
+          <Input
+            keyboardType={'default'}
+            label={'Name'}
+            placeholder={'Enter your Name...'}
+            onChangeText={value => setName(value)}
+          />
         </View>
         <View style={globalStyle.marginBottom24}>
           <Input
@@ -41,33 +52,28 @@ const Login = ({ navigation }) => {
           />
         </View>
         {error.length > 0 && <Text style={style.error}>{error}</Text>}
+        {success.length > 0 && <Text style={style.success}>{success}</Text>}
         <View style={globalStyle.marginBottom24}>
           <Button
+            isDisabled={
+              name.length <= 2 || email.length <= 5 || password.length < 8
+            }
+            title={'Registration'}
             onPress={async () => {
-              let user = await loginUser(email, password);
-              if (!user.status) {
+              let user = await createUser(name, email, password);
+              if (user.error) {
                 setError(user.error);
               } else {
                 setError('');
-                dispatch(logIn(user.data));
-                navigation.navigate(Routes.Home);
+                setSuccess('You have successfully registered');
+                setTimeout(() => navigation.goBack(), 3000);
               }
             }}
-            title={'Login'}
-            isDisabled={email.length < 5 || password.length < 8}
           />
         </View>
-        <Pressable
-          style={style.registrationButton}
-          onPress={() => {
-            navigation.navigate(Routes.Register);
-          }}
-        >
-          <Header color={'#156CF7'} type={3} title={"Don't have an account?"} />
-        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Login;
+export default Register;

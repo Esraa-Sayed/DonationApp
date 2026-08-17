@@ -11,13 +11,20 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  registrationButton: {
-    alignItems: 'center',
+  backButton: {
+    marginLeft: horizontalScale(14),
+    marginTop: verticalScale(7),
   },
   error: {
     fontFamily: 'Inter',
     fontSize: scaleFontSize(16),
     color: '#FF0000',
+    marginBottom: verticalScale(24),
+  },
+  success: {
+    fontFamily: 'Inter',
+    fontSize: scaleFontSize(16),
+    color: '#28a745',
     marginBottom: verticalScale(24),
   },
 });

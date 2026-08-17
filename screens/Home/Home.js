@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
+import { resetToInitialState } from '../../redux/reducers/User';
+import { logOut } from '../../Api/user';
 import Tab from '../../components/Tab/Tab';
 import { updateSelectedCategoryId } from '../../redux/reducers/Categories';
 import { updateSelectedDonationId } from '../../redux/reducers/Donations';
@@ -60,16 +62,24 @@ const Home = ({ navigation }) => {
           <View>
             <Text style={style.headerIntroText}>Hello, </Text>
             <View style={style.username}>
-              <Header
-                title={user.firstName + ' ' + user.lastName[0] + '. 👋'}
-              />
+              <Header title={user.displayName + ' 👋'} />
             </View>
           </View>
-          <Image
-            source={{ uri: user.profileImage }}
-            style={style.profileImage}
-            resizeMode={'contain'}
-          />
+          <View>
+            <Image
+              source={{ uri: user.profileImage }}
+              style={style.profileImage}
+              resizeMode={'contain'}
+            />
+            <Pressable
+              onPress={async () => {
+                dispatch(resetToInitialState());
+                await logOut();
+              }}
+            >
+              <Header type={3} title={'Logout'} color={'#156CF7'} />
+            </Pressable>
+          </View>
         </View>
         <View style={style.searchBox}>
           <Search />
